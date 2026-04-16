@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Tracking — Stay Ahead of Artificial Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Reset & Base ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:        #080812;
+      --surface:   #0f0f1e;
+      --card:      rgba(255,255,255,0.04);
+      --card-border: rgba(255,255,255,0.08);
+      --blue:      #4f8ef7;
+      --violet:    #9b72f7;
+      --cyan:      #38d9f5;
+      --green:     #34d399;
+      --amber:     #fbbf24;
+      --red:       #f87171;
+      --text:      #e8e8f0;
+      --muted:     #7b7b9a;
+      --radius:    14px;
+      --glow-blue: 0 0 40px rgba(79,142,247,0.25);
+      --glow-violet: 0 0 40px rgba(155,114,247,0.25);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ─── Scrollbar ─────────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--violet); border-radius: 3px; }
+
+    /* ─── Noise / Grid Background ───────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(79,142,247,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79,142,247,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── Nav ───────────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px;
+      height: 68px;
+      background: rgba(8,8,18,0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo-icon {
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, var(--blue), var(--violet));
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+    }
+
+    .nav-logo-text {
+      font-weight: 700; font-size: 17px; color: var(--text);
+      letter-spacing: -0.3px;
+    }
+
+    .nav-logo-text span { color: var(--blue); }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: 14px; font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: linear-gradient(135deg, var(--blue), var(--violet));
+      color: #fff !important;
+      padding: 8px 20px; border-radius: 8px;
+      font-size: 13px !important;
+      transition: opacity 0.2s !important;
+    }
+
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ─── Hero ──────────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+    }
+
+    .hero-glow-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(79,142,247,0.18) 0%, transparent 70%);
+      top: -100px; left: 50%; transform: translateX(-60%);
+    }
+
+    .hero-glow-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(155,114,247,0.15) 0%, transparent 70%);
+      bottom: 0; right: 0;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(79,142,247,0.1);
+      border: 1px solid rgba(79,142,247,0.3);
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-size: 12px; font-weight: 600;
+      color: var(--blue);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .pulse-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .hero h1 {
+      font-size: clamp(44px, 7vw, 88px);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 .line-gradient {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--cyan) 40%, var(--violet) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      max-width: 560px; margin: 0 auto 40px;
+      font-size: 18px; color: var(--muted);
+      font-weight: 400; line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex; align-items: center; justify-content: center;
+      gap: 16px; flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, var(--blue), var(--violet));
+      color: #fff; text-decoration: none;
+      padding: 14px 28px; border-radius: 10px;
+      font-size: 15px; font-weight: 600;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 24px rgba(79,142,247,0.35);
+      border: none; cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(79,142,247,0.45);
+    }
+
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      color: var(--text); text-decoration: none;
+      padding: 14px 28px; border-radius: 10px;
+      font-size: 15px; font-weight: 600;
+      transition: background 0.2s, border-color 0.2s;
+      cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(255,255,255,0.15);
+    }
+
+    .hero-stats {
+      display: flex; align-items: center; justify-content: center;
+      gap: 48px; margin-top: 72px; flex-wrap: wrap;
+    }
+
+    .stat { text-align: center; }
+
+    .stat-number {
+      font-size: 28px; font-weight: 800;
+      background: linear-gradient(135deg, var(--blue), var(--violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+    /* ─── Section Base ──────────────────────────────────────────── */
+    section { position: relative; z-index: 1; }
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 96px 24px;
+    }
+
+    .section-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 700;
+      color: var(--blue);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .section-tag::before {
+      content: '';
+      width: 20px; height: 2px;
+      background: var(--blue);
+      border-radius: 1px;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 16px; color: var(--muted);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* ─── AI Finder Tool ────────────────────────────────────────── */
+    #finder { background: var(--surface); }
+
+    .finder-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 48px;
+      margin-top: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .finder-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--blue), var(--violet), var(--cyan));
+    }
+
+    .finder-input-row {
+      display: flex; gap: 14px; flex-wrap: wrap;
+    }
+
+    .finder-input {
+      flex: 1; min-width: 280px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 16px 20px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px; color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .finder-input::placeholder { color: var(--muted); }
+
+    .finder-input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(79,142,247,0.12);
+    }
+
+    #finder-results {
+      margin-top: 36px;
+      display: none;
+    }
+
+    #finder-results.visible { display: block; }
+
+    .finder-results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .result-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px;
+      padding: 24px;
+      transition: border-color 0.2s, transform 0.2s;
+      animation: fadeInUp 0.3s ease both;
+    }
+
+    .result-card:hover {
+      border-color: rgba(79,142,247,0.3);
+      transform: translateY(-3px);
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .result-card-rank {
+      font-size: 11px; font-weight: 700;
+      color: var(--blue); letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .result-card-rank.rank-1 { color: var(--amber); }
+    .result-card-rank.rank-2 { color: var(--muted); }
+    .result-card-rank.rank-3 { color: #c77b47; }
+
+    .result-card-name {
+      font-size: 18px; font-weight: 700;
+      margin-bottom: 8px;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .result-card-desc {
+      font-size: 13px; color: var(--muted);
+      line-height: 1.6; margin-bottom: 14px;
+    }
+
+    .result-card-tags {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .tag {
+      font-size: 11px; font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 100px;
+      background: rgba(79,142,247,0.1);
+      color: var(--blue);
+      border: 1px solid rgba(79,142,247,0.2);
+    }
+
+    .result-sources {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 14px;
+      margin-top: 2px;
+    }
+
+    .result-sources-label {
+      font-size: 11px; font-weight: 600;
+      color: var(--muted); margin-bottom: 8px;
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+
+    .source-link {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12px; color: var(--cyan);
+      text-decoration: none; margin-bottom: 4px;
+      transition: opacity 0.2s;
+    }
+
+    .source-link:hover { opacity: 0.75; }
+
+    .no-results {
+      text-align: center; color: var(--muted);
+      padding: 32px; font-size: 15px;
+    }
+
+    /* ─── News Feed ─────────────────────────────────────────────── */
+    #news { background: var(--bg); }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .news-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+
+    .news-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--glow-blue);
+    }
+
+    .news-card-header {
+      padding: 24px 24px 0;
+    }
+
+    .news-card-meta {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .news-source-badge {
+      font-size: 11px; font-weight: 700;
+      padding: 3px 10px; border-radius: 100px;
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+
+    .badge-blue   { background: rgba(79,142,247,0.12); color: var(--blue); }
+    .badge-violet { background: rgba(155,114,247,0.12); color: var(--violet); }
+    .badge-cyan   { background: rgba(56,217,245,0.12); color: var(--cyan); }
+    .badge-green  { background: rgba(52,211,153,0.12); color: var(--green); }
+    .badge-amber  { background: rgba(251,191,36,0.12); color: var(--amber); }
+    .badge-red    { background: rgba(248,113,113,0.12); color: var(--red); }
+
+    .news-date { font-size: 12px; color: var(--muted); }
+
+    .news-card-title {
+      font-size: 16px; font-weight: 700;
+      line-height: 1.4; margin-bottom: 10px;
+    }
+
+    .news-card-excerpt {
+      font-size: 13px; color: var(--muted);
+      line-height: 1.6; padding: 0 24px 24px;
+    }
+
+    .news-card-footer {
+      border-top: 1px solid var(--card-border);
+      padding: 12px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .news-read-more {
+      font-size: 12px; font-weight: 600;
+      color: var(--blue); text-decoration: none;
+      display: flex; align-items: center; gap: 4px;
+      transition: gap 0.2s;
+    }
+
+    .news-read-more:hover { gap: 8px; }
+
+    /* ─── Categories ────────────────────────────────────────────── */
+    #categories { background: var(--surface); }
+
+    .categories-header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      flex-wrap: wrap; gap: 24px; margin-bottom: 48px;
+    }
+
+    .cat-filters {
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+
+    .cat-filter-btn {
+      font-size: 13px; font-weight: 600;
+      padding: 8px 18px; border-radius: 100px;
+      border: 1px solid var(--card-border);
+      background: var(--card);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .cat-filter-btn:hover,
+    .cat-filter-btn.active {
+      background: rgba(79,142,247,0.12);
+      border-color: rgba(79,142,247,0.4);
+      color: var(--blue);
+    }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 24px;
+    }
+
+    .cat-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .cat-card:hover {
+      border-color: rgba(155,114,247,0.3);
+      transform: translateY(-3px);
+    }
+
+    .cat-card-header {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .cat-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .cat-icon-blue   { background: rgba(79,142,247,0.12); }
+    .cat-icon-violet { background: rgba(155,114,247,0.12); }
+    .cat-icon-cyan   { background: rgba(56,217,245,0.12); }
+    .cat-icon-green  { background: rgba(52,211,153,0.12); }
+    .cat-icon-amber  { background: rgba(251,191,36,0.12); }
+    .cat-icon-red    { background: rgba(248,113,113,0.12); }
+
+    .cat-card-title { font-size: 17px; font-weight: 700; }
+    .cat-card-sub   { font-size: 12px; color: var(--muted); }
+
+    .ai-list { list-style: none; }
+
+    .ai-list-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .ai-list-item:last-child { border-bottom: none; }
+
+    .ai-rank {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px; font-weight: 500;
+      color: var(--muted); width: 20px; flex-shrink: 0;
+    }
+
+    .ai-name { font-size: 14px; font-weight: 600; flex: 1; }
+
+    .ai-score {
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    .ai-score-bar {
+      width: 60px; height: 4px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 2px; overflow: hidden;
+    }
+
+    .ai-score-fill {
+      height: 100%; border-radius: 2px;
+      background: linear-gradient(90deg, var(--blue), var(--violet));
+    }
+
+    .ai-score-num {
+      font-size: 12px; font-weight: 600;
+      color: var(--muted); width: 28px; text-align: right;
+    }
+
+    .cat-updated {
+      font-size: 11px; color: var(--muted);
+      margin-top: 16px;
+      display: flex; align-items: center; gap: 4px;
+    }
+
+    /* ─── Footer ────────────────────────────────────────────────── */
+    footer {
+      background: var(--surface);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 48px 24px 32px;
+    }
+
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+    }
+
+    .footer-top {
+      display: flex; flex-wrap: wrap;
+      gap: 48px; justify-content: space-between;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand { max-width: 280px; }
+
+    .footer-brand-logo {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 14px; text-decoration: none;
+    }
+
+    .footer-brand-icon {
+      width: 28px; height: 28px;
+      background: linear-gradient(135deg, var(--blue), var(--violet));
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+
+    .footer-brand-name {
+      font-weight: 700; font-size: 15px; color: var(--text);
+    }
+
+    .footer-brand-name span { color: var(--blue); }
+
+    .footer-tagline { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    .footer-col h4 {
+      font-size: 13px; font-weight: 700;
+      color: var(--text); margin-bottom: 16px;
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+
+    .footer-links { list-style: none; }
+
+    .footer-links li { margin-bottom: 10px; }
+
+    .footer-links a {
+      font-size: 13px; color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+
+    .footer-copy { font-size: 12px; color: var(--muted); }
+
+    .footer-status {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12px; color: var(--green);
+    }
+
+    /* ─── Divider Gradient ──────────────────────────────────────── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(79,142,247,0.3), transparent);
+    }
+
+    /* ─── Responsive ────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .finder-card { padding: 28px 20px; }
+
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── Nav ────────────────────────────────────────────────────── -->
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="nav-logo-icon">⚡</div>
+    <span class="nav-logo-text">AI<span>Tracking</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#finder">Find an AI</a></li>
+    <li><a href="#news">News</a></li>
+    <li><a href="#categories">By Category</a></li>
+    <li><a href="#categories" class="nav-cta">Browse Categories</a></li>
+  </ul>
+</nav>
+
+<!-- ─── Hero ────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-glow hero-glow-1"></div>
+  <div class="hero-glow hero-glow-2"></div>
+  <div style="position:relative; z-index:1;">
+    <div class="hero-badge">
+      <div class="pulse-dot"></div>
+      Updated Daily · April 2026
+    </div>
+    <h1>
+      The AI you need<br/>
+      <span class="line-gradient">for every task.</span>
+    </h1>
+    <p>
+      Your community hub for tracking every major AI model, comparing capabilities,
+      and finding the perfect tool for your exact workflow — backed by real sources.
+    </p>
+    <div class="hero-actions">
+      <a href="#finder" class="btn-primary">
+        ⚡ Find My AI
+      </a>
+      <a href="#categories" class="btn-secondary">
+        Browse Categories →
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-number">340+</div>
+        <div class="stat-label">AI Models Tracked</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">28</div>
+        <div class="stat-label">Job Categories</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">Daily</div>
+        <div class="stat-label">News Updates</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">Free</div>
+        <div class="stat-label">Always</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── AI Finder Tool ───────────────────────────────────────────── -->
+<section id="finder">
+  <div class="section-inner">
+    <div class="section-tag">AI Finder</div>
+    <h2 class="section-title">What do you want to create?</h2>
+    <p class="section-sub">
+      Describe your task and we'll instantly match you with the top-performing AI tools,
+      ranked by capability — with sources to back it up.
+    </p>
+
+    <div class="finder-card">
+      <div class="finder-input-row">
+        <input
+          type="text"
+          class="finder-input"
+          id="finder-input"
+          placeholder="e.g. &quot;animate a character&quot;, &quot;write a blog post&quot;, &quot;generate realistic photos&quot; …"
+          autocomplete="off"
+        />
+        <button class="btn-primary" onclick="runFinder()">
+          Find Best AI
+        </button>
+      </div>
+
+      <div id="finder-results">
+        <h3 id="finder-results-heading" style="font-size:15px;font-weight:700;color:var(--muted);margin-bottom:4px;"></h3>
+        <div class="finder-results-grid" id="finder-results-grid"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── News ─────────────────────────────────────────────────────── -->
+<section id="news">
+  <div class="section-inner">
+    <div class="section-tag">Latest News</div>
+    <h2 class="section-title">What's happening in AI</h2>
+    <p class="section-sub">
+      Curated updates on model releases, research breakthroughs, and industry moves — refreshed daily.
+    </p>
+
+    <div class="news-grid" id="news-grid">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ─── Categories ───────────────────────────────────────────────── -->
+<section id="categories">
+  <div class="section-inner">
+    <div class="categories-header">
+      <div>
+        <div class="section-tag">By Category</div>
+        <h2 class="section-title">Best AI for every job</h2>
+        <p class="section-sub">
+          Updated rankings across every major professional workflow.
+        </p>
+      </div>
+      <div class="cat-filters" id="cat-filters">
+        <button class="cat-filter-btn active" onclick="filterCats(this,'all')">All</button>
+        <button class="cat-filter-btn" onclick="filterCats(this,'creative')">Creative</button>
+        <button class="cat-filter-btn" onclick="filterCats(this,'productivity')">Productivity</button>
+        <button class="cat-filter-btn" onclick="filterCats(this,'dev')">Development</button>
+        <button class="cat-filter-btn" onclick="filterCats(this,'business')">Business</button>
+      </div>
+    </div>
+
+    <div class="categories-grid" id="categories-grid">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ─── Footer ───────────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="footer-brand-logo" href="#">
+          <div class="footer-brand-icon">⚡</div>
+          <span class="footer-brand-name">AI<span>Tracking</span></span>
+        </a>
+        <p class="footer-tagline">
+          The community-powered directory for finding, comparing, and staying current with AI tools across every category.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul class="footer-links">
+          <li><a href="#finder">AI Finder Tool</a></li>
+          <li><a href="#categories">All Categories</a></li>
+          <li><a href="#news">Latest News</a></li>
+          <li><a href="#">Model Comparisons</a></li>
+          <li><a href="#">Changelog</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Categories</h4>
+        <ul class="footer-links">
+          <li><a href="#">Image Generation</a></li>
+          <li><a href="#">Video & Animation</a></li>
+          <li><a href="#">Writing & Content</a></li>
+          <li><a href="#">Code & Development</a></li>
+          <li><a href="#">Audio & Music</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Community</h4>
+        <ul class="footer-links">
+          <li><a href="#">Discord</a></li>
+          <li><a href="#">Submit an AI</a></li>
+          <li><a href="#">About</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 AI Tracking. Built for the community.</div>
+      <div class="footer-status">
+        <div class="pulse-dot"></div>
+        All systems live
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ─── JS Data & Logic ──────────────────────────────────────────── -->
+<script>
+/* ━━━━ DATA ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+const aiDatabase = [
+  /* ─ Image Generation ─ */
+  {
+    name: "Midjourney v7",
+    emoji: "🎨",
+    tags: ["Image Generation", "Artistic", "Photorealism"],
+    keywords: ["image", "art", "photo", "illustration", "draw", "paint", "generate image", "picture", "visual", "design", "artwork", "creative"],
+    description: "Best-in-class image generation with stunning aesthetic quality, photorealism, and stylistic range.",
+    sources: [
+      { label: "Midjourney Blog", url: "https://www.midjourney.com/blog" },
+      { label: "TechCrunch Review", url: "https://techcrunch.com" },
+    ]
+  },
+  {
+    name: "DALL·E 3",
+    emoji: "🖼️",
+    tags: ["Image Generation", "OpenAI", "Prompt-Accurate"],
+    keywords: ["image", "photo", "generate image", "dalle", "openai", "picture", "visual", "art"],
+    description: "Exceptional prompt understanding with high fidelity output. Deeply integrated into ChatGPT.",
+    sources: [
+      { label: "OpenAI DALL·E 3 Docs", url: "https://openai.com/dall-e-3" },
+      { label: "Wired: Best Image AI", url: "https://wired.com" },
+    ]
+  },
+  {
+    name: "Stable Diffusion 3.5",
+    emoji: "🌌",
+    tags: ["Image Generation", "Open Source", "Customizable"],
+    keywords: ["image", "open source", "stable diffusion", "photo", "generate", "local", "fine-tune"],
+    description: "The open-source powerhouse. Run locally, fine-tune on your own data, unlimited generations.",
+    sources: [
+      { label: "Stability AI Blog", url: "https://stability.ai" },
+      { label: "Hugging Face Models", url: "https://huggingface.co" },
+    ]
+  },
+
+  /* ─ Video & Animation ─ */
+  {
+    name: "Sora (OpenAI)",
+    emoji: "🎬",
+    tags: ["Video Generation", "Animation", "Cinematic"],
+    keywords: ["video", "animation", "animate", "movie", "film", "clip", "motion", "sora", "character animation"],
+    description: "OpenAI's flagship video model. Generates cinematic, physics-aware video up to 60 seconds from text prompts.",
+    sources: [
+      { label: "OpenAI Sora", url: "https://openai.com/sora" },
+      { label: "The Verge: Sora Review", url: "https://theverge.com" },
+    ]
+  },
+  {
+    name: "Runway Gen-4",
+    emoji: "🎞️",
+    tags: ["Video Editing", "Animation", "VFX"],
+    keywords: ["video", "animate", "animation", "edit video", "vfx", "visual effects", "motion", "runway", "character animation"],
+    description: "Industry-standard AI video studio. Used by professional studios for character animation, VFX, and editing.",
+    sources: [
+      { label: "Runway Research", url: "https://runwayml.com" },
+      { label: "Hollywood Reporter AI", url: "https://hollywoodreporter.com" },
+    ]
+  },
+  {
+    name: "Kling AI",
+    emoji: "🎥",
+    tags: ["Video Generation", "Realistic", "Long-form"],
+    keywords: ["video", "animation", "animate", "realistic video", "motion", "character"],
+    description: "Kuaishou's video model excelling at realistic human motion and expressive character animation.",
+    sources: [
+      { label: "Kling AI Platform", url: "https://klingai.com" },
+      { label: "AI Video Benchmark 2026", url: "https://artificialintelligence-news.com" },
+    ]
+  },
+  {
+    name: "Pika 2.0",
+    emoji: "✨",
+    tags: ["Video Generation", "Creative", "Short-form"],
+    keywords: ["video", "animate", "animation", "short video", "clip", "pika", "creative video"],
+    description: "Specializes in creative, stylized short-form video. Excellent for social content and visual storytelling.",
+    sources: [
+      { label: "Pika Labs", url: "https://pika.art" },
+    ]
+  },
+
+  /* ─ Writing & Content ─ */
+  {
+    name: "Claude Opus 4.6",
+    emoji: "📝",
+    tags: ["Writing", "Long-form", "Reasoning"],
+    keywords: ["write", "writing", "essay", "blog", "content", "copywriting", "article", "draft", "story", "creative writing", "document"],
+    description: "Best for long-form writing, nuanced reasoning, and content that needs to sound genuinely human.",
+    sources: [
+      { label: "Anthropic Claude", url: "https://anthropic.com" },
+      { label: "Ars Technica AI Comparison", url: "https://arstechnica.com" },
+    ]
+  },
+  {
+    name: "GPT-4o",
+    emoji: "💬",
+    tags: ["Writing", "Multimodal", "Versatile"],
+    keywords: ["write", "writing", "chat", "content", "copy", "blog", "article", "summarize", "email", "gpt"],
+    description: "OpenAI's versatile workhorse. Excellent for varied writing tasks, especially when combined with browsing.",
+    sources: [
+      { label: "OpenAI GPT-4o", url: "https://openai.com/gpt-4o" },
+    ]
+  },
+  {
+    name: "Jasper AI",
+    emoji: "🗒️",
+    tags: ["Copywriting", "Marketing", "SEO"],
+    keywords: ["marketing copy", "seo", "blog", "ad copy", "sales copy", "landing page copy", "email campaign", "copywriting"],
+    description: "Built specifically for marketers. Templates for ads, email campaigns, product descriptions, and SEO content.",
+    sources: [
+      { label: "Jasper AI", url: "https://jasper.ai" },
+      { label: "G2 Marketing AI Reviews", url: "https://g2.com" },
+    ]
+  },
+
+  /* ─ Coding ─ */
+  {
+    name: "GitHub Copilot",
+    emoji: "💻",
+    tags: ["Coding", "Autocomplete", "IDE"],
+    keywords: ["code", "coding", "programming", "developer", "software", "debug", "function", "script", "github", "ide", "autocomplete"],
+    description: "The gold standard for in-editor AI coding. Brilliant at completions, refactoring, and test generation.",
+    sources: [
+      { label: "GitHub Copilot", url: "https://github.com/features/copilot" },
+      { label: "Stack Overflow Survey 2025", url: "https://stackoverflow.com" },
+    ]
+  },
+  {
+    name: "Cursor",
+    emoji: "⌨️",
+    tags: ["Coding", "IDE", "Agentic"],
+    keywords: ["code", "coding", "programming", "ide", "cursor", "build", "app", "software", "developer", "codebase"],
+    description: "AI-native IDE with codebase-wide understanding. Best for building full features and refactoring entire files.",
+    sources: [
+      { label: "Cursor AI", url: "https://cursor.sh" },
+    ]
+  },
+  {
+    name: "Claude Code",
+    emoji: "🤖",
+    tags: ["Coding", "Agentic", "Terminal"],
+    keywords: ["code", "coding", "terminal", "cli", "agentic coding", "build app", "developer", "software engineer"],
+    description: "Agentic terminal-based coding with file editing, shell access, and long-horizon task completion.",
+    sources: [
+      { label: "Anthropic Claude Code", url: "https://anthropic.com" },
+    ]
+  },
+
+  /* ─ Audio & Music ─ */
+  {
+    name: "Suno v4",
+    emoji: "🎵",
+    tags: ["Music Generation", "Lyrics", "Full Songs"],
+    keywords: ["music", "song", "audio", "lyrics", "melody", "beat", "generate music", "compose", "track", "suno"],
+    description: "Generate full vocal songs with lyrics, instrumentation, and mastering from a simple text prompt.",
+    sources: [
+      { label: "Suno AI", url: "https://suno.ai" },
+      { label: "Rolling Stone: AI Music", url: "https://rollingstone.com" },
+    ]
+  },
+  {
+    name: "Udio",
+    emoji: "🎧",
+    tags: ["Music Generation", "High-Fidelity", "Genre Range"],
+    keywords: ["music", "song", "beat", "audio", "track", "generate music", "instrumental", "udio"],
+    description: "Exceptional sonic quality and wide genre flexibility. Great for instrumental and ambient music.",
+    sources: [
+      { label: "Udio", url: "https://udio.com" },
+    ]
+  },
+  {
+    name: "ElevenLabs",
+    emoji: "🎙️",
+    tags: ["Voice Cloning", "Text-to-Speech", "Audio"],
+    keywords: ["voice", "speech", "text to speech", "voiceover", "narration", "podcast", "voice clone", "audio", "elevenlabs"],
+    description: "Most realistic AI voice and speech synthesis. Used by podcasters, audiobook creators, and content studios.",
+    sources: [
+      { label: "ElevenLabs", url: "https://elevenlabs.io" },
+      { label: "PCMag: Best AI Voice Tools", url: "https://pcmag.com" },
+    ]
+  },
+
+  /* ─ Research ─ */
+  {
+    name: "Perplexity AI",
+    emoji: "🔍",
+    tags: ["Research", "Search", "Citations"],
+    keywords: ["research", "search", "find information", "sources", "citations", "news", "fact-check", "lookup", "question"],
+    description: "AI search engine that answers questions with real-time web sources and inline citations.",
+    sources: [
+      { label: "Perplexity AI", url: "https://perplexity.ai" },
+      { label: "CNBC: Best AI Search", url: "https://cnbc.com" },
+    ]
+  },
+  {
+    name: "Elicit",
+    emoji: "📊",
+    tags: ["Research", "Academic", "Literature Review"],
+    keywords: ["research", "academic", "paper", "literature review", "study", "science", "data analysis", "summarize paper"],
+    description: "Purpose-built for academic research. Finds, reads, and synthesizes scientific papers for you.",
+    sources: [
+      { label: "Elicit.org", url: "https://elicit.org" },
+    ]
+  },
+
+  /* ─ Presentation ─ */
+  {
+    name: "Gamma",
+    emoji: "📊",
+    tags: ["Presentations", "Slides", "Decks"],
+    keywords: ["presentation", "slides", "deck", "powerpoint", "pitch", "keynote", "pitch deck"],
+    description: "Generate beautiful, fully designed presentations from a prompt or outline in seconds.",
+    sources: [
+      { label: "Gamma App", url: "https://gamma.app" },
+      { label: "ProductHunt: Top Slide AI", url: "https://producthunt.com" },
+    ]
+  },
+
+  /* ─ Data Analysis ─ */
+  {
+    name: "Julius AI",
+    emoji: "📈",
+    tags: ["Data Analysis", "Charts", "Spreadsheets"],
+    keywords: ["data", "analysis", "chart", "graph", "spreadsheet", "csv", "excel", "analytics", "visualize data"],
+    description: "Upload any dataset and get instant analysis, visualizations, and insights through natural language.",
+    sources: [
+      { label: "Julius AI", url: "https://julius.ai" },
+    ]
+  },
+
+  /* ─ 3D ─ */
+  {
+    name: "Meshy AI",
+    emoji: "🧊",
+    tags: ["3D Generation", "3D Models", "Game Assets"],
+    keywords: ["3d", "3d model", "three dimensional", "game asset", "character model", "blender", "mesh", "cad"],
+    description: "Generate production-ready 3D models, textures, and assets from text or image prompts.",
+    sources: [
+      { label: "Meshy AI", url: "https://meshy.ai" },
+    ]
+  },
+];
+
+/* ─── News Data ─────────────────────────────────────────────────── */
+const newsData = [
+  {
+    source: "TechCrunch",
+    badgeClass: "badge-blue",
+    date: "Apr 12, 2026",
+    title: "OpenAI's Sora 2.0 Raises the Bar for AI Video with 4K Output and Real-Time Generation",
+    excerpt: "The latest update to OpenAI's video model introduces native 4K rendering, improved physics simulation, and a real-time preview mode that dramatically speeds up the creative workflow.",
+    readTime: "4 min read",
+    url: "https://techcrunch.com"
+  },
+  {
+    source: "The Verge",
+    badgeClass: "badge-violet",
+    date: "Apr 11, 2026",
+    title: "Google DeepMind's Gemini Ultra 2.0 Tops Every Major Benchmark — What This Means",
+    excerpt: "Gemini Ultra 2.0 has outperformed competitors on MMLU, HumanEval, and a suite of multimodal tasks. We break down what the numbers actually mean for everyday users.",
+    readTime: "6 min read",
+    url: "https://theverge.com"
+  },
+  {
+    source: "Wired",
+    badgeClass: "badge-cyan",
+    date: "Apr 10, 2026",
+    title: "Midjourney v7's 'Personalization Engine' Changes How Artists Work With AI",
+    excerpt: "The new personalization feature trains on your creative preferences over time, gradually producing outputs that feel uniquely yours without any manual prompt engineering.",
+    readTime: "5 min read",
+    url: "https://wired.com"
+  },
+  {
+    source: "MIT Tech Review",
+    badgeClass: "badge-green",
+    date: "Apr 9, 2026",
+    title: "ElevenLabs Launches Real-Time Voice Translation Across 32 Languages",
+    excerpt: "The audio AI company has quietly shipped a feature that translates and dubs spoken audio live, maintaining the speaker's original vocal character and emotion.",
+    readTime: "3 min read",
+    url: "https://technologyreview.com"
+  },
+  {
+    source: "VentureBeat",
+    badgeClass: "badge-amber",
+    date: "Apr 8, 2026",
+    title: "Runway's New 'Director Mode' Lets You Control AI Video Like a Film Set",
+    excerpt: "Runway Gen-4 introduces camera angle controls, actor direction prompts, and multi-shot sequencing that give creators filmmaking-grade control over AI-generated scenes.",
+    readTime: "4 min read",
+    url: "https://venturebeat.com"
+  },
+  {
+    source: "Ars Technica",
+    badgeClass: "badge-red",
+    date: "Apr 7, 2026",
+    title: "The Real Difference Between Claude, GPT-4o, and Gemini for Long-Form Writing",
+    excerpt: "After testing all three on 50 writing tasks — from technical docs to short stories — the results are more nuanced than the benchmark leaderboards suggest.",
+    readTime: "8 min read",
+    url: "https://arstechnica.com"
+  },
+];
+
+/* ─── Category Data ─────────────────────────────────────────────── */
+const categories = [
+  {
+    icon: "🎨", iconClass: "cat-icon-violet",
+    title: "Image Generation", sub: "Photos, illustrations, art",
+    filter: "creative", updated: "Apr 12, 2026",
+    ais: [
+      { name: "Midjourney v7",       score: 98 },
+      { name: "DALL·E 3",            score: 91 },
+      { name: "Stable Diffusion 3.5",score: 87 },
+      { name: "Adobe Firefly 4",     score: 84 },
+      { name: "Ideogram 2.0",        score: 80 },
+    ]
+  },
+  {
+    icon: "🎬", iconClass: "cat-icon-blue",
+    title: "Video & Animation", sub: "Clips, motion, storytelling",
+    filter: "creative", updated: "Apr 11, 2026",
+    ais: [
+      { name: "Sora (OpenAI)",  score: 97 },
+      { name: "Runway Gen-4",   score: 93 },
+      { name: "Kling AI",       score: 89 },
+      { name: "Pika 2.0",       score: 82 },
+      { name: "Luma Dream Machine", score: 78 },
+    ]
+  },
+  {
+    icon: "📝", iconClass: "cat-icon-cyan",
+    title: "Writing & Content", sub: "Articles, blogs, copy",
+    filter: "productivity", updated: "Apr 12, 2026",
+    ais: [
+      { name: "Claude Opus 4.6", score: 96 },
+      { name: "GPT-4o",          score: 93 },
+      { name: "Gemini Ultra 2.0",score: 90 },
+      { name: "Jasper AI",       score: 82 },
+      { name: "Copy.ai",         score: 74 },
+    ]
+  },
+  {
+    icon: "💻", iconClass: "cat-icon-green",
+    title: "Code & Development", sub: "IDE tools, code gen, debug",
+    filter: "dev", updated: "Apr 10, 2026",
+    ais: [
+      { name: "Claude Code",      score: 97 },
+      { name: "GitHub Copilot",   score: 94 },
+      { name: "Cursor",           score: 93 },
+      { name: "Gemini Code Assist",score: 87 },
+      { name: "Tabnine",          score: 76 },
+    ]
+  },
+  {
+    icon: "🎵", iconClass: "cat-icon-amber",
+    title: "Music & Audio", sub: "Songs, beats, voice, SFX",
+    filter: "creative", updated: "Apr 9, 2026",
+    ais: [
+      { name: "Suno v4",     score: 95 },
+      { name: "Udio",        score: 90 },
+      { name: "ElevenLabs",  score: 88 },
+      { name: "Mubert",      score: 79 },
+      { name: "Soundraw",    score: 74 },
+    ]
+  },
+  {
+    icon: "🔍", iconClass: "cat-icon-blue",
+    title: "Research & Search", sub: "Facts, papers, citations",
+    filter: "productivity", updated: "Apr 11, 2026",
+    ais: [
+      { name: "Perplexity Pro",score: 95 },
+      { name: "Elicit",        score: 89 },
+      { name: "ChatGPT (Browse)",score: 84 },
+      { name: "Consensus",     score: 81 },
+      { name: "You.com",       score: 75 },
+    ]
+  },
+  {
+    icon: "📊", iconClass: "cat-icon-violet",
+    title: "Presentations & Slides", sub: "Decks, pitch, reports",
+    filter: "business", updated: "Apr 8, 2026",
+    ais: [
+      { name: "Gamma",         score: 94 },
+      { name: "Beautiful.ai",  score: 87 },
+      { name: "Pitch",         score: 82 },
+      { name: "Tome",          score: 78 },
+      { name: "SlidesAI",      score: 71 },
+    ]
+  },
+  {
+    icon: "📈", iconClass: "cat-icon-cyan",
+    title: "Data Analysis", sub: "CSV, charts, insights",
+    filter: "business", updated: "Apr 7, 2026",
+    ais: [
+      { name: "Julius AI",    score: 93 },
+      { name: "ChatGPT + Code Interpreter", score: 91 },
+      { name: "Noteable",     score: 84 },
+      { name: "Obviously AI", score: 80 },
+      { name: "Akkio",        score: 74 },
+    ]
+  },
+  {
+    icon: "🧊", iconClass: "cat-icon-green",
+    title: "3D Modeling & Design", sub: "Models, textures, assets",
+    filter: "creative", updated: "Apr 6, 2026",
+    ais: [
+      { name: "Meshy AI",     score: 93 },
+      { name: "Luma Genie",   score: 88 },
+      { name: "Spline AI",    score: 83 },
+      { name: "Alpha3D",      score: 78 },
+      { name: "Kaedim",       score: 71 },
+    ]
+  },
+  {
+    icon: "📣", iconClass: "cat-icon-amber",
+    title: "Marketing & Ads", sub: "Campaigns, copy, strategy",
+    filter: "business", updated: "Apr 10, 2026",
+    ais: [
+      { name: "Jasper AI",       score: 92 },
+      { name: "AdCreative.ai",   score: 87 },
+      { name: "Copy.ai",         score: 84 },
+      { name: "Anyword",         score: 79 },
+      { name: "Writesonic",      score: 75 },
+    ]
+  },
+  {
+    icon: "🤝", iconClass: "cat-icon-red",
+    title: "Customer Service & Chat", sub: "Bots, support, CRM",
+    filter: "business", updated: "Apr 9, 2026",
+    ais: [
+      { name: "Intercom Fin",    score: 91 },
+      { name: "Zendesk AI",      score: 88 },
+      { name: "Tidio",           score: 83 },
+      { name: "Drift (Salesloft)",score: 79 },
+      { name: "Freshdesk Freddy",score: 74 },
+    ]
+  },
+  {
+    icon: "🎓", iconClass: "cat-icon-blue",
+    title: "Education & Tutoring", sub: "Study, learning, courses",
+    filter: "productivity", updated: "Apr 8, 2026",
+    ais: [
+      { name: "Khan Academy Khanmigo", score: 92 },
+      { name: "Claude (Tutoring)",     score: 90 },
+      { name: "Socratic by Google",    score: 85 },
+      { name: "Synthesis",             score: 80 },
+      { name: "Duolingo Max",          score: 77 },
+    ]
+  },
+];
+
+/* ━━━━ RENDER ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* ─ Render News ─ */
+function renderNews() {
+  const grid = document.getElementById('news-grid');
+  grid.innerHTML = newsData.map(n => `
+    <div class="news-card" onclick="window.open('${n.url}','_blank')">
+      <div class="news-card-header">
+        <div class="news-card-meta">
+          <span class="news-source-badge ${n.badgeClass}">${n.source}</span>
+          <span class="news-date">${n.date}</span>
+        </div>
+        <div class="news-card-title">${n.title}</div>
+      </div>
+      <div class="news-card-excerpt">${n.excerpt}</div>
+      <div class="news-card-footer">
+        <a class="news-read-more" href="${n.url}" target="_blank">Read article →</a>
+        <span style="font-size:12px;color:var(--muted)">${n.readTime}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ─ Render Categories ─ */
+let currentFilter = 'all';
+
+function renderCategories(filter) {
+  const grid = document.getElementById('categories-grid');
+  const filtered = filter === 'all' ? categories : categories.filter(c => c.filter === filter);
+
+  grid.innerHTML = filtered.map(cat => `
+    <div class="cat-card">
+      <div class="cat-card-header">
+        <div class="cat-icon ${cat.iconClass}">${cat.icon}</div>
+        <div>
+          <div class="cat-card-title">${cat.title}</div>
+          <div class="cat-card-sub">${cat.sub}</div>
+        </div>
+      </div>
+      <ul class="ai-list">
+        ${cat.ais.map((ai, i) => `
+          <li class="ai-list-item">
+            <span class="ai-rank">#${i + 1}</span>
+            <span class="ai-name">${ai.name}</span>
+            <div class="ai-score">
+              <div class="ai-score-bar">
+                <div class="ai-score-fill" style="width:${ai.score}%"></div>
+              </div>
+              <span class="ai-score-num">${ai.score}</span>
+            </div>
+          </li>
+        `).join('')}
+      </ul>
+      <div class="cat-updated">🕐 Updated ${cat.updated}</div>
+    </div>
+  `).join('');
+}
+
+function filterCats(btn, filter) {
+  document.querySelectorAll('.cat-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCategories(filter);
+}
+
+/* ─ AI Finder ─ */
+function runFinder() {
+  const query = document.getElementById('finder-input').value.trim().toLowerCase();
+  const resultsEl = document.getElementById('finder-results');
+  const grid = document.getElementById('finder-results-grid');
+  const heading = document.getElementById('finder-results-heading');
+
+  if (!query) return;
+
+  // Score each AI
+  const scored = aiDatabase.map(ai => {
+    let score = 0;
+    ai.keywords.forEach(kw => {
+      if (query.includes(kw)) score += kw.split(' ').length > 1 ? 3 : 1;
+    });
+    return { ...ai, _score: score };
+  }).filter(ai => ai._score > 0).sort((a, b) => b._score - a._score).slice(0, 6);
+
+  if (scored.length === 0) {
+    heading.textContent = `No specific match found for "${query}" — try broader terms like "video", "write", or "image".`;
+    grid.innerHTML = `<div class="no-results">Try: "generate images", "write content", "create music", "animate a character", "analyze data", "code", "search web"</div>`;
+    resultsEl.classList.add('visible');
+    return;
+  }
+
+  const rankLabels = ['🥇 Best Pick', '🥈 Runner Up', '🥉 Solid Choice', '#4 Option', '#5 Option', '#6 Option'];
+
+  heading.textContent = `Top AI tools for "${query}"`;
+  grid.innerHTML = scored.map((ai, i) => `
+    <div class="result-card" style="animation-delay:${i * 0.06}s">
+      <div class="result-card-rank rank-${i + 1}">${rankLabels[i] || `#${i + 1} Option`}</div>
+      <div class="result-card-name">${ai.emoji} ${ai.name}</div>
+      <div class="result-card-desc">${ai.description}</div>
+      <div class="result-card-tags">
+        ${ai.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+      </div>
+      <div class="result-sources">
+        <div class="result-sources-label">Sources</div>
+        ${ai.sources.map(s => `
+          <a class="source-link" href="${s.url}" target="_blank">
+            ↗ ${s.label}
+          </a>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+
+  resultsEl.classList.add('visible');
+  resultsEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+/* Enter key support */
+document.getElementById('finder-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') runFinder();
+});
+
+/* ━━━━ INIT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+renderNews();
+renderCategories('all');
+</script>
+</body>
+</html>
