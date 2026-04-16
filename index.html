@@ -823,6 +823,7 @@
         <button class="cat-filter-btn" onclick="filterCats(this,'productivity')">Productivity</button>
         <button class="cat-filter-btn" onclick="filterCats(this,'dev')">Development</button>
         <button class="cat-filter-btn" onclick="filterCats(this,'business')">Business</button>
+        <button class="cat-filter-btn" onclick="filterCats(this,'automation')">Automation</button>
       </div>
     </div>
 
@@ -1122,6 +1123,69 @@ const aiDatabase = [
     ]
   },
 
+  /* ─ AI Automation (Phone & Email) ─ */
+  {
+    name: "n8n",
+    emoji: "🔗",
+    tags: ["Automation", "Workflows", "Open Source"],
+    keywords: ["automation", "workflow", "automate", "n8n", "integrate", "phone automation", "email automation", "trigger", "no-code", "low-code", "zapier alternative"],
+    description: "Open-source workflow automation that connects any app. Build AI-powered pipelines for email, phone, CRM, and more — self-hostable and highly customizable.",
+    sources: [
+      { label: "n8n Official", url: "https://n8n.io" },
+      { label: "n8n Docs", url: "https://docs.n8n.io" },
+    ]
+  },
+  {
+    name: "Bland AI",
+    emoji: "📞",
+    tags: ["Phone Calls", "Voice AI", "Outbound"],
+    keywords: ["phone", "phone call", "call", "outbound", "inbound", "voice ai", "phone automation", "ai calls", "sales calls", "bland"],
+    description: "Send and receive AI phone calls at scale. Handles outbound sales, appointment reminders, and inbound support with realistic voice AI.",
+    sources: [
+      { label: "Bland AI", url: "https://www.bland.ai" },
+    ]
+  },
+  {
+    name: "Vapi",
+    emoji: "🤙",
+    tags: ["Voice AI", "Phone", "Developer API"],
+    keywords: ["phone", "voice", "call", "phone call", "voice api", "vapi", "inbound", "outbound", "phone automation", "voice agent"],
+    description: "Developer-first voice AI platform for building phone call agents. Low latency, highly customizable, with real-time interruption handling.",
+    sources: [
+      { label: "Vapi.ai", url: "https://vapi.ai" },
+    ]
+  },
+  {
+    name: "Instantly.ai",
+    emoji: "📧",
+    tags: ["Email Automation", "Cold Email", "Outreach"],
+    keywords: ["email", "cold email", "email automation", "outreach", "email campaign", "sales email", "follow-up", "inbox", "instantly"],
+    description: "AI-powered cold email platform with automated follow-ups, inbox rotation, and deliverability tools for large-scale outreach.",
+    sources: [
+      { label: "Instantly.ai", url: "https://instantly.ai" },
+    ]
+  },
+  {
+    name: "Make (Integromat)",
+    emoji: "⚙️",
+    tags: ["Automation", "No-Code", "Integrations"],
+    keywords: ["automation", "workflow", "automate", "make", "integromat", "email automation", "no-code", "integrate", "trigger", "zapier"],
+    description: "Visual automation platform with 1,500+ app integrations. Build complex multi-step workflows for email, phone, CRM, and AI tools.",
+    sources: [
+      { label: "Make.com", url: "https://make.com" },
+    ]
+  },
+  {
+    name: "Retell AI",
+    emoji: "🗣️",
+    tags: ["Voice AI", "Phone", "Conversational"],
+    keywords: ["phone", "voice", "call", "voice ai", "retell", "conversational ai", "phone automation", "inbound", "outbound"],
+    description: "Build production-grade AI voice agents for phone. Supports complex branching conversations, live call transfer, and CRM integration.",
+    sources: [
+      { label: "Retell AI", url: "https://www.retellai.com" },
+    ]
+  },
+
   /* ─ 3D ─ */
   {
     name: "Meshy AI",
@@ -1325,6 +1389,42 @@ const categories = [
       { name: "Tidio",           score: 83 },
       { name: "Drift (Salesloft)",score: 79 },
       { name: "Freshdesk Freddy",score: 74 },
+    ]
+  },
+  {
+    icon: "📞", iconClass: "cat-icon-green",
+    title: "AI Phone Automation", sub: "Calls, voice agents, outbound",
+    filter: "automation", updated: "Apr 14, 2026",
+    ais: [
+      { name: "Bland AI",       score: 95 },
+      { name: "Vapi",           score: 92 },
+      { name: "Retell AI",      score: 89 },
+      { name: "Synthflow AI",   score: 83 },
+      { name: "Air AI",         score: 78 },
+    ]
+  },
+  {
+    icon: "📧", iconClass: "cat-icon-cyan",
+    title: "AI Email Automation", sub: "Outreach, campaigns, follow-ups",
+    filter: "automation", updated: "Apr 14, 2026",
+    ais: [
+      { name: "Instantly.ai",   score: 94 },
+      { name: "Clay",           score: 91 },
+      { name: "Smartlead",      score: 87 },
+      { name: "Apollo.io AI",   score: 84 },
+      { name: "Lemlist",        score: 79 },
+    ]
+  },
+  {
+    icon: "🔗", iconClass: "cat-icon-violet",
+    title: "Workflow Automation", sub: "No-code, integrations, pipelines",
+    filter: "automation", updated: "Apr 13, 2026",
+    ais: [
+      { name: "n8n",            score: 96 },
+      { name: "Make",           score: 91 },
+      { name: "Zapier AI",      score: 88 },
+      { name: "Activepieces",   score: 82 },
+      { name: "Pipedream",      score: 77 },
     ]
   },
   {
